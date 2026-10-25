@@ -1,6 +1,6 @@
 """Offline PhantomShield REST server. No third party dependencies."""
-import json, sqlite3, uuid, os, argparse
-from contextlib import contextmanager
+import json, sqlite3, uuid, os, argparse, logging, threading
+from storage import open_database, database_url, StorageConfigurationError
 from datetime import datetime, timezone
 from pathlib import Path
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
@@ -13,12 +13,17 @@ ASSETS = [( 'employee_payroll_2026.csv','file','Finance Server','confidential'),
 SCENARIOS = {'file':[None,7,1], 'credential':[None,4,6], 'multi':[None,7,1,4,8]}
 def now(): return datetime.now(timezone.utc).isoformat()
 def uid(prefix): return prefix+'-'+uuid.uuid4().hex[:8].upper()
-@contextmanager
 def connect():
-    c=sqlite3.connect(DB); c.row_factory=sqlite3.Row
-    try:
-        with c: yield c
-    finally: c.close()
+    return open_database(DB)
+_initialized = False
+_init_lock = threading.Lock()
+def ensure_initialized():
+    global _initialized
+    if not _initialized:
+        with _init_lock:
+            if not _initialized:
+                init()
+                _initialized = True
 def init():
     with connect() as c:
         c.executescript('''CREATE TABLE IF NOT EXISTS decoys(id INTEGER PRIMARY KEY,name TEXT,type TEXT,node TEXT,sensitivity TEXT,active INTEGER DEFAULT 1);
@@ -27,15 +32,20 @@ def init():
         CREATE TABLE IF NOT EXISTS alerts(id TEXT PRIMARY KEY,event_id TEXT,severity TEXT,description TEXT,status TEXT,created_at TEXT);
         CREATE TABLE IF NOT EXISTS incidents(id TEXT PRIMARY KEY,session_id TEXT UNIQUE,severity TEXT,started_at TEXT,ended_at TEXT,summary TEXT);''')
         if not c.execute('SELECT 1 FROM decoys').fetchone(): c.executemany('INSERT INTO decoys(id,name,type,node,sensitivity) VALUES(?,?,?,?,?)',[(i,*a) for i,a in enumerate(ASSETS)])
-def rows(c, table): return [dict(r) for r in c.execute('SELECT * FROM '+table)]
+def rows(c, table):
+    order={'decoys':'id','sessions':'created_at,id','events':'timestamp,id','alerts':'created_at,id','incidents':'started_at,id'}[table]
+    return [dict(r) for r in c.execute('SELECT * FROM '+table+' ORDER BY '+order)]
 def snapshot():
-    with connect() as c: return {t:rows(c,t) for t in ['decoys','events','alerts','incidents','sessions']}
+    with connect() as c:
+        result={t:rows(c,t) for t in ['decoys','events','alerts','incidents','sessions']}
+        result['_meta']={'storage':'postgresql' if database_url() else 'sqlite'}
+        return result
 def session(c,scenario='manual'):
     s={'id':uid('SES'),'actor_id':uid('SIM'),'scenario':scenario,'step':0,'status':'running' if scenario!='manual' else 'complete','created_at':now()}
     c.execute('INSERT INTO sessions VALUES(:id,:actor_id,:scenario,:step,:status,:created_at)',s); return s
 RANK={'low':0,'medium':1,'high':2,'critical':3}
 def record(c,s,asset_id=None):
-    previous=[dict(r) for r in c.execute('SELECT * FROM events WHERE session_id=? ORDER BY rowid',(s['id'],))]
+    previous=[dict(r) for r in c.execute('SELECT * FROM events WHERE session_id=? ORDER BY timestamp,id',(s['id'],))]
     asset=dict(c.execute('SELECT * FROM decoys WHERE id=?',(asset_id,)).fetchone()) if asset_id is not None else None
     if asset and not asset['active']: raise ValueError('This decoy is disabled. Enable it in Settings first.')
     severity,reason,rule='low','Simulated actor entered the monitored workspace.','Observation'
@@ -62,6 +72,18 @@ class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         p=urlparse(self.path).path
         if not p.startswith('/api/'): return super().do_GET()
+        try:
+            ensure_initialized()
+            return self.get_api(p)
+        except Exception as error: self.storage_error(error)
+    def storage_error(self, error):
+        # Do not log connection strings or expose database internals to visitors.
+        logging.error('PhantomShield database request failed: %s (SQLSTATE %s)',type(error).__name__,getattr(error,'sqlstate','n/a'))
+        if isinstance(error, StorageConfigurationError):
+            return self.send_json(503,{'error':str(error),'code':'DATABASE_NOT_CONFIGURED'})
+        return self.send_json(503,{'error':'Database unavailable. Check the server logs and database connection settings.','code':'DATABASE_UNAVAILABLE'})
+    def get_api(self, p):
+        if p=='/api/health': return self.send_json(200,{'status':'ok','storage':'postgresql' if database_url() else 'sqlite'})
         state=snapshot(); key=p.split('/')[-1]
         if key in state: return self.send_json(200,state[key])
         if key in ('state','dashboard'): return self.send_json(200,state)
@@ -75,6 +97,7 @@ class Handler(SimpleHTTPRequestHandler):
     def do_PATCH(self): self.mutate()
     def mutate(self):
         try:
+            ensure_initialized()
             data=json.loads(self.rfile.read(int(self.headers.get('Content-Length','0'))) or '{}'); p=urlparse(self.path).path
             with connect() as c:
                 if p=='/api/simulations/reset':
@@ -112,9 +135,9 @@ class Handler(SimpleHTTPRequestHandler):
                 else: return self.send_json(404,{'error':'Unknown endpoint'})
             self.send_json(200,result)
         except (ValueError,KeyError,TypeError,sqlite3.IntegrityError) as e: self.send_json(400,{'error':str(e)})
-        except Exception: self.send_json(500,{'error':'Storage operation failed. Check server console and database permissions.'})
+        except Exception as error: self.storage_error(error)
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(); parser.add_argument('--port',type=int,default=8787); args=parser.parse_args(); init()
+    parser=argparse.ArgumentParser(); parser.add_argument('--port',type=int,default=8787); args=parser.parse_args(); ensure_initialized()
     print(f'PhantomShield ready at http://127.0.0.1:{args.port}',flush=True)
     ThreadingHTTPServer(('127.0.0.1',args.port),Handler).serve_forever()
 

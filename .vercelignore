@@ -1,0 +1,10 @@
+.git
+__pycache__
+**/__pycache__/**
+*.db
+*.db-*
+*.zip
+.env
+.env.*
+test_*.py
+Start PhantomShield.bat

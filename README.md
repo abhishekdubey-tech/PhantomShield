@@ -1,5 +1,7 @@
 # PhantomShield
 
+**Vercel deployment update:** This package adds PostgreSQL persistence and a Vercel Python entry point. Follow [DEPLOY-VERCEL.md](DEPLOY-VERCEL.md) before deploying. The original local/offline instructions below remain applicable when no database connection variable is set. The hosted version requires `DATABASE_URL`; it never uses a writable local SQLite file on Vercel.
+
 An offline cyber-deception hackathon application for a fictional organization, Aegis Dynamics. Everything is simulated; no external scanning, credential use, or exploitation occurs.
 
 ## Run
