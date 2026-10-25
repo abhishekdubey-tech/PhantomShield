@@ -1,76 +1,95 @@
-# PhantomShield
+# 🛡️ PhantomShield
+### Cyber Deception & Intrusion Intelligence
 
-**Vercel deployment update:** This package adds PostgreSQL persistence and a Vercel Python entry point. Follow [DEPLOY-VERCEL.md](DEPLOY-VERCEL.md) before deploying. The original local/offline instructions below remain applicable when no database connection variable is set. The hosted version requires `DATABASE_URL`; it never uses a writable local SQLite file on Vercel.
+**Turn an intruder’s curiosity into a trail of evidence.**
 
-An offline cyber-deception hackathon application for a fictional organization, Aegis Dynamics. Everything is simulated; no external scanning, credential use, or exploitation occurs.
+PhantomShield is a cybersecurity hackathon prototype that demonstrates how decoy digital assets can reveal suspicious activity. It creates a fictional corporate environment where interactions with fake files, credentials, and monitored endpoints generate security events, alerts, and incident reports.
 
-## Run
+**DECEIVE → DETECT → TRACE → ALERT → INVESTIGATE**
 
-Requires Python 3.10 or newer. No package installation, build step, accounts, or internet connection required.
+## The Problem
 
-```powershell
-cd PhantomShield
+An isolated security alert rarely tells the complete story. Investigators need to understand what was accessed, how activity progressed, and which actions belong to the same incident.
+
+PhantomShield demonstrates how cyber deception can create detection signals and connect them into an understandable investigation.
+
+## How It Works
+
+1. **Deceive:** Place fictional confidential files, nonfunctional credentials, and monitored endpoint objects inside a simulated network.
+2. **Detect:** Evaluate interactions using four explainable detection rules.
+3. **Trace:** Connect recorded activity using a shared session ID.
+4. **Alert:** Generate severity-ranked alerts that operators can acknowledge or resolve.
+5. **Investigate:** Reconstruct the timeline and generate a report from stored evidence.
+
+All activity takes place in a safe simulation. No real scanning, exploitation, or credential harvesting occurs.
+
+## Key Features
+
+- **Cinematic introduction:** Five storytelling stages explain the threat, network, deception, detection, and defense.
+- **Live dashboard:** Metrics and visualizations update from recorded simulation data.
+- **Deception Lab:** Interact with four decoy files, two fake credential records, and four monitored endpoints.
+- **Attack Simulator:** Run Suspicious File Access, Credential Discovery, or Multi-Stage Intrusion.
+- **Network Monitor:** Inspect six simulated nodes and their recorded activity.
+- **Threat Alerts:** Search, filter, acknowledge, and resolve alerts.
+- **Incident Timeline:** Follow the sequence of events within a session.
+- **Incident Reports:** Generate evidence-based summaries, export JSON, and print or save as PDF.
+- **Persistent storage:** Use Neon PostgreSQL online or SQLite locally.
+- **Accessible design:** Responsive layouts and reduced-motion support.
+
+## Detection Rules
+
+| Rule | Trigger | Severity |
+|------|---------|----------|
+| R1 | Opening a confidential decoy file | Medium |
+| R2 | Accessing fictional credentials | High |
+| R3 | Accessing multiple distinct monitored assets in one session | At least High |
+| R4 | Accessing an endpoint after credential discovery | Critical |
+
+Escalation takes precedence. Each event records its primary detection rule.
+
+## Try the Live Demo
+
+**Live application:** https://phantom-shield.vercel.app/
+
+1. Click **Launch Live Demo**.
+2. Select **Multi-Stage Intrusion**.
+3. Click **Launch Simulated Intrusion**.
+4. Watch events, alerts, and affected network nodes update.
+5. Open **Incident Timeline** to inspect the session.
+6. Generate an incident report.
+
+From a clean reset, this scenario produces **5 events, 3 alerts, and 1 critical incident**.
+
+The scroll-driven introduction is illustrative. Scrolling does not create security events or trigger the detection engine.
+
+## Technology Stack
+
+- **Frontend:** HTML5, CSS3, JavaScript
+- **Animations:** GSAP and ScrollTrigger
+- **Visualizations:** SVG
+- **Backend:** Python standard-library HTTP handlers and REST APIs
+- **Hosted database:** Neon PostgreSQL
+- **Database driver:** Psycopg 3
+- **Offline database:** SQLite
+- **Hosting:** Vercel
+- **Version control:** Git and GitHub
+- **Testing:** Python unittest
+
+## Architecture
+
+Browser Interaction / Simulation Step
+                  ↓
+             Python REST API
+                  ↓
+      Detection Rules + Session History
+                  ↓
+       PostgreSQL / Local SQLite
+                  ↓
+   Dashboard → Alerts → Timeline → Report
+
+## Run Locally
+
+Requires Python 3.10 or newer.
+
+```bash
 python server.py
-```
-
-Open http://127.0.0.1:8787 . Keep the terminal open. To use another port: `python server.py --port 9000`.
-
-## 60-second demonstration
-
-1. Open the cinematic introduction, then click **Launch Live Demo** to enter Overview. Or open http://127.0.0.1:8787/#dashboard directly. The initial database starts empty, with ten active decoys. All metrics derive from stored records.
-2. Select Multi-Stage Intrusion and click **Launch Simulated Intrusion**.
-3. Five steps run about two seconds apart. Observe event counts, alerts, network nodes, and incidents update. Pause/resume is available in the launch control.
-4. Open Incident Timeline, select the session, and inspect the ordered evidence.
-5. Click **Generate incident report**, then **Print / Save as PDF**. Choose your browser's PDF destination to create a PDF. JSON evidence export is also available.
-6. Acknowledge or resolve alerts in Threat Alerts. Reload to verify persistence.
-7. Reset Demo asks for confirmation, clears events/alerts/incidents/sessions, and re-enables all decoys.
-
-Deception Lab also supports manual file, fake credential, and endpoint interactions. These share a manual session until browser reload or reset. Disabling a decoy in Settings prevents interactions. All credential contents are explicitly fictional and nonfunctional.
-
-## Implementation and scope
-
-This implementation uses a dependency-free Python HTTP REST service with **actual SQLite persistence**, plus browser-native JavaScript, HTML, CSS, and SVG. Flask, React, Vite, Tailwind, and third-party chart libraries are not included. Flask was unavailable in the environment; the Python standard library keeps installation and offline operation reliable. The frontend talks only to REST endpoints, so the service can later be replaced with Flask without changing the data contract.
-
-The SQLite schema and ten sample decoy definitions initialize automatically in `server.py`. Runtime data is saved to `phantomshield.db` beside the server; set `PHANTOM_DB` to override the path. Simulation records are generated by real interactions; there are no permanently hardcoded dashboard counts. The initial empty state is intentional, rather than presenting invented historical telemetry.
-
-Four detection policies operate on session history: confidential file access (medium); credential interaction (high); multiple distinct decoys in one session (at least high); endpoint access after credential discovery (critical). Each interaction creates an event. A detected event creates an alert and creates/updates a correlated incident. One primary rule is recorded per event, with escalation taking precedence. Reports summarize actual evidence deterministically, without an AI model.
-
-Simulation advancement is driven by the open browser and stored transactionally in SQLite. Closing the browser stops automatic advancement; reopening resumes a running session. This is a single-operator local prototype, without authentication or a multi-operator job scheduler. The server binds only to loopback. It is delivered for local offline use, and has not been published to hosting.
-
-## REST API
-
-All request and response bodies use JSON. Errors return an `error` string with a non-2xx status.
-
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| GET | `/api/state` or `/api/dashboard` | Consistent shared snapshot |
-| GET | `/api/decoys`, `/api/events`, `/api/alerts`, `/api/incidents`, `/api/sessions` | Stored collections |
-| POST | `/api/simulations/start` | `{ "scenario": "multi" }` (`file`, `credential`, or `multi`) |
-| POST | `/api/simulations/step` | Advance `{ "session_id": "…" }` |
-| POST | `/api/simulations/pause`, `/api/simulations/resume` | Control stored session |
-| POST | `/api/simulations/reset` | Reset demonstration |
-| POST | `/api/interactions` | `{ "asset_id": 1, "session_id": "optional-manual-session" }` |
-| PATCH | `/api/alerts/:id` | `{ "status": "acknowledged" }` (`open`, `acknowledged`, `resolved`) |
-| PATCH | `/api/decoys/:id` | `{ "active": false }` |
-| GET | `/api/reports/:id` | Incident evidence and recommendations |
-
-## Cinematic introduction
-
-The root page is a five-stage introduction: **The Threat → The Network → The Deception → The Detection → The Defense**. An original SVG shield, orbital rings, and lightweight circuit graphics introduce the system. Desktop GSAP ScrollTrigger pins one network scene while nodes emerge, decoy labels appear, and red intrusion paths lead to an explicitly illustrative alert. The final stage reveals a command-center preview and another **Launch Live Demo** entry point. No landing interaction calls a detection API. Scrolling does not create events, sessions, alerts, or incidents.
-
-GSAP 3.13.0 and ScrollTrigger are vendored in `web/vendor/`; there are no CDN or font requests at runtime. No WebGL, video backgrounds, large images, or 3D models are used. Desktop uses one pinned timeline, native scrolling, transform/opacity reveals, and SVG stroke progression. Narrow or short viewports use an unpinned vertical story with shorter animations. The footer's **Motion** control persists locally; system `prefers-reduced-motion` takes precedence. Reduced motion shows the full document without pinning, parallax, or animated reveals. The page is also readable if GSAP fails to load.
-
-The operational application is lazy-loaded at `#dashboard` and kept mounted while navigating back to the introduction using **← Experience**. Existing simulation, storage, alert management, network inspection, manual decoy interactions, timeline, report printing/export, and reset behavior continue independently. Re-entering the intro never resets the database. An already-running simulation can continue while the intro is shown.
-
-Browser verification covered desktop pinning (1440 × 900), all three network stages, dashboard entry, a real five-event multi-stage simulation, its generated critical incident and report, mobile layout (390 × 844), motion off/on, and the return route. Scrolling through the introduction was verified to leave events, alerts, and sessions unchanged. Five HTTP acceptance tests run against a separate temporary SQLite database.
-
-### Run checks
-
-```powershell
-python -m unittest test_app.py -v
-node --check web/app.js
-node --check web/experience.js
-```
-
-Tests start a real server against a temporary database and verify manual interactions, credential alerts, critical escalation, correlation, all three scenarios, pause/resume, chronological evidence, report data, status persistence, reset, schema initialization, and static asset serving. Browser printing uses the browser print dialog; there is no server-side PDF engine.
-
