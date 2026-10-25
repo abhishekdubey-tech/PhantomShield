@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#060b10">
+  <meta name="description" content="PhantomShield — Turn an intruder's next move into your next advantage. Explore a safe, interactive cyber-deception command center.">
+  <title>PhantomShield · See the unseen.</title>
+  <link rel="icon" href="/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/experience.css">
+  <script defer src="/vendor/gsap.min.js"></script>
+  <script defer src="/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="/experience.js"></script>
+</head>
+<body data-view="story">
+<a class="skip-story" href="#dashboard">Skip to live command center</a>
+<div id="experience">
+  <nav class="exp-nav" aria-label="Experience navigation">
+    <a class="exp-brand" href="#threat" aria-label="PhantomShield home"><img src="/mark.svg" width="28" height="32" alt="">Phantom<span>Shield</span><span class="brand-divider"></span><small>DECEPTION INTELLIGENCE</small></a>
+    <div class="exp-nav-center"><a href="#network" data-stage="network">The system</a><a href="#defense">The command center</a></div>
+    <div class="exp-nav-end"><span class="exp-sim"><i></i>SIMULATION MODE</span><a class="exp-button small" href="#dashboard">Launch Live Demo <span>↗</span></a></div>
+  </nav>
+  <main class="exp-main" id="story-main">
+    <section class="exp-hero" id="threat" aria-labelledby="hero-title">
+      <div class="exp-grid-bg" aria-hidden="true"></div><div class="hero-orbit-bg" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <div class="exp-kicker hero-enter"><span class="exp-line"></span>01 / THE THREAT</div>
+        <h1 id="hero-title"><span class="reveal-line"><span>They see</span></span><span class="reveal-line"><span>an opportunity.</span></span><span class="reveal-line"><span class="text-cyan">You see everything.</span></span></h1>
+        <p class="hero-enter hero-description">Give intruders a reason to stay.<br>And leave them nowhere to hide.</p>
+        <p class="hero-enter hero-detail">A cyber-deception system that turns convincing decoys<br class="desktop-break"> into detection signals, movement trails, and incident intelligence.</p>
+        <div class="hero-enter hero-ctas"><a class="exp-button solid" href="#dashboard">Launch Live Demo <span>↗</span></a><a class="exp-text-link" href="#network" data-stage="network">Explore the system <span>↓</span></a></div>
+        <div class="hero-enter hero-note"><i></i>REAL DETECTION LOGIC. ENTIRELY SIMULATED THREATS.</div>
+      </div>
+      <figure class="hero-visual" aria-label="An illustrated digital shield intercepts a red intrusion path">
+        <div class="visual-caption"><span class="tiny-square"></span>PHANTOM ENGINE <span class="muted-cyan">/ ONLINE</span></div>
+        <svg class="shield-scene" viewBox="0 0 640 650" role="img" aria-label="Layered cyan digital shield inside orbital network rings">
+          <defs>
+            <radialGradient id="shieldAura"><stop stop-color="#12cbb7" stop-opacity=".2"/><stop offset=".7" stop-color="#13bbb6" stop-opacity=".03"/><stop offset="1" stop-color="#13bbb6" stop-opacity="0"/></radialGradient>
+            <linearGradient id="shieldFill" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0e4b4c" stop-opacity=".5"/><stop offset=".5" stop-color="#071b25" stop-opacity=".85"/><stop offset="1" stop-color="#0d3639" stop-opacity=".4"/></linearGradient>
+            <linearGradient id="shieldEdge" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#b0fff0"/><stop offset=".45" stop-color="#50ddcc"/><stop offset="1" stop-color="#136f7c"/></linearGradient>
+            <pattern id="shieldGrid" width="23" height="23" patternUnits="userSpaceOnUse"><path d="M23 0H0V23" fill="none" stroke="#47c4b9" stroke-opacity=".11" stroke-width=".7"/></pattern>
+            <clipPath id="shieldClip"><path d="M320 156 433 205V303Q430 398 320 465Q210 398 207 303V205Z"/></clipPath>
+          </defs>
+          <circle cx="320" cy="318" r="300" fill="url(#shieldAura)"/>
+          <g class="orbit-outer"><circle cx="320" cy="318" r="261" fill="none" stroke="#19424a" stroke-width=".8"/><circle cx="320" cy="318" r="248" fill="none" stroke="#35727a" stroke-width="1" stroke-dasharray="2 13"/><path d="M320 57A261 261 0 0 1 559 213M82 424A261 261 0 0 0 320 579" fill="none" stroke="#5cc3b8" stroke-width="2"/><circle cx="320" cy="57" r="4" fill="#71e7d2"/><circle cx="320" cy="579" r="3" fill="#71e7d2"/></g>
+          <g class="orbit-inner"><ellipse cx="320" cy="318" rx="209" ry="217" fill="none" stroke="#1b535b" stroke-width=".7" transform="rotate(30 320 318)"/><circle cx="320" cy="318" r="195" fill="none" stroke="#24636a" stroke-width=".8" stroke-dasharray="65 13 3 13"/><path d="M143 229 320 114 500 229V410L320 520 143 410Z" fill="none" stroke="#18454d" stroke-width="1"/></g>
+          <g class="hero-circuit" fill="none" stroke="#286773" stroke-width="1"><path d="M0 180H88L143 229H207M640 176H548L500 229H433M0 460H99L143 410H236M640 461H543L500 410H404M320 0V156M320 465V650"/><path d="M64 318H207M433 318H584" stroke-dasharray="3 7"/></g>
+          <g class="digital-shield">
+            <path d="M320 140 449 196V304Q444 411 320 484Q196 411 191 304V196Z" fill="#071821" stroke="#246c72" stroke-width="1"/>
+            <path d="M320 156 433 205V303Q430 398 320 465Q210 398 207 303V205Z" fill="url(#shieldFill)" stroke="url(#shieldEdge)" stroke-width="1.6"/>
+            <g clip-path="url(#shieldClip)"><rect x="200" y="150" width="240" height="325" fill="url(#shieldGrid)"/><path d="M207 205 320 260 433 205M207 303 320 358 433 303M320 156V465M207 205 433 410M433 205 207 410" fill="none" stroke="#5bd6c2" stroke-opacity=".13"/><rect class="shield-scan" x="200" y="200" width="240" height="3" fill="#8bffdc" fill-opacity=".4"/></g>
+            <path d="M320 184 410 223V302Q405 381 320 438Q235 381 230 302V223Z" fill="none" stroke="#3e9b96" stroke-width=".6" stroke-dasharray="4 6"/>
+            <path d="M279 298 307 325 363 266" fill="none" stroke="#9bffdf" stroke-width="5" stroke-linecap="square"/>
+            <circle cx="320" cy="156" r="3" fill="#adffe5"/><circle cx="320" cy="465" r="3" fill="#67dcca"/>
+          </g>
+          <path class="hero-intrusion" d="M0 460H99L143 410 200 370" fill="none" stroke="#f46c7d" stroke-width="2" pathLength="1"/>
+          <circle class="intrusion-dot" cx="143" cy="410" r="4" fill="#ff8190"/>
+          <g font-family="monospace" font-size="9" letter-spacing="1.5" fill="#527d87"><text x="74" y="159">BOUNDARY / 001</text><text x="434" y="480">SIGNAL CAPTURED</text><text x="277" y="550">DECEPTION ACTIVE</text></g>
+          <g class="shield-coordinates" stroke="#417b83" stroke-width="1"><path d="M290 95H302M296 89V101M532 310H544M538 304V316M101 310H113M107 304V316M290 540H302M296 534V546"/></g>
+        </svg>
+        <div class="hero-float float-one"><span class="signal-icon">⌁</span><div><small>UNTRUSTED ACTIVITY</small><strong>Signal intercepted<span class="red-dot"></span></strong></div></div>
+        <div class="hero-float float-two"><span class="signal-icon cyan">⬡</span><div><small>DECEPTION LAYER</small><strong>Every move leaves a trace.</strong></div></div>
+        <figcaption class="hero-visual-footer"><span><i></i>ILLUSTRATIVE TELEMETRY</span><span>AEGIS DYNAMICS / SANDBOX</span></figcaption>
+      </figure>
+      <a class="scroll-cue" href="#network" data-stage="network"><span class="scroll-track"><i></i></span>SCROLL TO UNCOVER<span>↓</span></a>
+      <div class="hero-edition">BUILT TO DECEIVE.<br>DESIGNED TO REVEAL.</div>
+    </section>
+    <div class="exp-specs" aria-label="Simulation environment specifications"><div><strong>10</strong><span>DECOY ASSETS</span></div><div><strong>06</strong><span>NETWORK NODES</span></div><div><strong>04</strong><span>DETECTION RULES</span></div><p>One environment.<br><span>A complete chain of evidence.</span></p><span class="spec-tag"><i></i>CONTROLLED. CONTAINED. CONNECTED.</span></div>
+    <section class="sequence" aria-label="How PhantomShield reveals an intrusion">
+      <div class="sequence-scene">
+        <div class="exp-grid-bg" aria-hidden="true"></div>
+        <div class="sequence-top"><span>THE ANATOMY OF A DETECTION</span><span class="illustration-label">VISUAL WALKTHROUGH / NO LIVE EVENTS</span></div>
+        <div class="sequence-layout">
+          <div class="chapter-stack">
+            <article class="story-chapter" id="network" data-chapter="network"><div class="exp-kicker"><span class="exp-line"></span>02 / THE NETWORK</div><h2>A familiar world.<br><span>An unfamiliar visitor.</span></h2><p>A gateway. An application. The servers that keep a company running. To an intruder, it looks like a place worth exploring.</p><p class="chapter-secondary">To PhantomShield, it’s a connected environment where every interaction can become evidence.</p><div class="chapter-proof"><span>01</span><div>Map the environment<small>Six simulated nodes. One observable perimeter.</small></div></div></article>
+            <article class="story-chapter" id="deception" data-chapter="deception"><div class="exp-kicker"><span class="exp-line"></span>03 / THE DECEPTION</div><h2>Too tempting<br><span>to leave alone.</span></h2><p>A confidential report. A database backup. An administrator’s credentials. Convincing assets, placed exactly where curiosity leads.</p><p class="chapter-secondary">The files are fictional. The detection opportunity is real. Legitimate work never needs to touch these decoys.</p><div class="chapter-proof"><span>02</span><div>Plant the signal<small>Files, fake credentials, and monitored endpoints.</small></div></div></article>
+            <article class="story-chapter" id="detection" data-chapter="detection"><div class="exp-kicker"><span class="exp-line red"></span>04 / THE DETECTION</div><h2>Their next move.<br><span class="text-red">Your first signal.</span></h2><p>A decoy opens. Credentials are discovered. Another endpoint is accessed. Isolated actions become a correlated intrusion.</p><p class="chapter-secondary">Four deterministic detection rules turn the session into severity-ranked alerts and a reconstructable incident.</p><div class="chapter-proof red-proof"><span>03</span><div>Connect the evidence<small>Deceive → detect → trace → investigate.</small></div></div></article>
+          </div>
+          <div class="network-theater" aria-label="Illustrated network evolving from connected nodes to decoys and a detected intrusion">
+            <div class="theater-head"><span><i></i>AEGIS DYNAMICS</span><span>ISOLATED NETWORK</span></div>
+            <svg class="story-network" viewBox="0 0 760 575" role="img" aria-label="External Client connects to Web Gateway, Application Server, Finance Server, Database Server and Backup Server">
+              <defs><radialGradient id="nodeAura"><stop stop-color="#51dfc7" stop-opacity=".2"/><stop offset="1" stop-color="#51dfc7" stop-opacity="0"/></radialGradient><pattern id="netDots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#1e3c43"/></pattern></defs>
+              <rect width="760" height="575" fill="url(#netDots)"/><ellipse cx="390" cy="280" rx="280" ry="205" fill="none" stroke="#14343b" stroke-dasharray="3 7"/><ellipse cx="390" cy="280" rx="228" ry="155" fill="none" stroke="#122c34"/>
+              <g class="net-edges" fill="none" stroke="#2d6971" stroke-width="1.5"><path d="M75 280H240" pathLength="1"/><path d="M240 280H410" pathLength="1"/><path d="M410 280H460L535 115H650" pathLength="1"/><path d="M410 280H650" pathLength="1"/><path d="M410 280H460L535 445H650" pathLength="1"/></g>
+              <g class="net-trace" fill="none" stroke="#fb697b" stroke-width="2.5"><path d="M75 280H410H460L535 115H650" pathLength="1"/><path d="M650 115H535L460 280H410" pathLength="1"/><path d="M410 280H650" pathLength="1"/></g>
+              <g class="net-node" data-name="external"><circle cx="75" cy="280" r="50" fill="url(#nodeAura)"/><rect x="48" y="253" width="54" height="54" rx="13"/><circle cx="75" cy="276" r="9"/><path d="M62 293Q75 280 88 293"/><text x="75" y="335">EXTERNAL CLIENT</text><text class="node-sub" x="75" y="352">SIMULATED ACTOR</text></g>
+              <g class="net-node" data-name="gateway"><circle cx="240" cy="280" r="60" fill="url(#nodeAura)"/><rect x="209" y="249" width="62" height="62" rx="14"/><path d="M240 262 252 268V281Q252 292 240 299Q228 292 228 281V268Z"/><text x="240" y="341">WEB GATEWAY</text><text class="node-sub" x="240" y="358">ENTRY POINT</text></g>
+              <g class="net-node" data-name="application"><circle cx="410" cy="280" r="75" fill="url(#nodeAura)"/><rect x="375" y="245" width="70" height="70" rx="15"/><path d="M395 266H425V292H395ZM395 274H425M402 270H403M408 270H409"/><text x="410" y="345">APPLICATION</text><text class="node-sub" x="410" y="362">SERVER / 01</text></g>
+              <g class="net-node target-node" data-name="finance"><circle cx="650" cy="115" r="60" fill="url(#nodeAura)"/><rect x="621" y="86" width="58" height="58" rx="13"/><path d="M638 101H662V129H638ZM643 108H657M643 114H657M643 120H652"/><text x="650" y="173">FINANCE</text><text class="node-sub" x="650" y="190">SERVER / 02</text></g>
+              <g class="net-node target-node" data-name="database"><circle cx="650" cy="280" r="60" fill="url(#nodeAura)"/><rect x="621" y="251" width="58" height="58" rx="13"/><ellipse cx="650" cy="270" rx="13" ry="5"/><path d="M637 270V290C637 298 663 298 663 290V270M637 280C637 288 663 288 663 280"/><text x="650" y="338">DATABASE</text><text class="node-sub" x="650" y="355">SERVER / 03</text></g>
+              <g class="net-node" data-name="backup"><circle cx="650" cy="445" r="60" fill="url(#nodeAura)"/><rect x="621" y="416" width="58" height="58" rx="13"/><path d="M637 433H663V455H637ZM637 440H663M641 449H645M649 449H653"/><text x="650" y="503">BACKUP</text><text class="node-sub" x="650" y="520">SERVER / 04</text></g>
+              <g class="decoy-tags"><g transform="translate(448 43)"><rect width="224" height="28" rx="4"/><text x="11" y="18">▤ confidential_financial_report.pdf</text></g><g transform="translate(290 393)"><rect width="200" height="28" rx="4"/><text x="11" y="18">⚿ admin_credentials.txt</text><path d="M100 0V-58"/></g><g transform="translate(471 538)"><rect width="178" height="28" rx="4"/><text x="11" y="18">▤ database_backup.sql</text></g></g>
+              <g class="detected-ring" fill="none" stroke="#fb697b" stroke-width="1"><circle cx="650" cy="115" r="40"/><circle cx="650" cy="280" r="40"/><circle cx="410" cy="280" r="48"/></g>
+            </svg>
+            <div class="illustrated-alert"><div class="alert-indicator">!</div><div><div class="illustrated-alert-label">CRITICAL / ILLUSTRATIVE ALERT</div><strong>Credential-to-endpoint escalation</strong><small>One session. Multiple decoys. A connected trail.</small></div><span>↗</span></div>
+            <div class="theater-foot"><span class="network-legend"><i></i>MONITORED NODE <i class="decoy-legend"></i>DECOY ASSET <i class="threat-legend"></i>INTRUSION PATH</span><span class="theater-status">NETWORK MAPPED</span></div>
+          </div>
+        </div>
+        <div class="sequence-bottom"><div class="stage-nav" aria-label="Story stages"><a href="#network" data-stage="network"><span>02</span>NETWORK</a><a href="#deception" data-stage="deception"><span>03</span>DECEPTION</a><a href="#detection" data-stage="detection"><span>04</span>DETECTION</a></div><span class="sequence-hint">KEEP SCROLLING TO FOLLOW THE SIGNAL ↓</span></div><div class="sequence-progress" aria-hidden="true"><i></i></div>
+      </div>
+    </section>
+    <section class="exp-defense" id="defense" aria-labelledby="defense-title"><div class="defense-grid" aria-hidden="true"></div>
+      <div class="defense-intro"><div class="exp-kicker"><span class="exp-line"></span>05 / THE DEFENSE</div><h2 id="defense-title">From hidden threat.<br><span>To clear intelligence.</span></h2><p>The story ends here. Your investigation starts now.</p></div>
+      <div class="command-preview"><div class="preview-top"><span><img src="/mark.svg" width="18" height="22" alt="">PHANTOMSHIELD <small>/ COMMAND CENTER</small></span><span class="exp-sim"><i></i>SIMULATION MODE</span></div>
+        <div class="preview-body"><div class="preview-sidebar"><span class="preview-selected">◈ &nbsp; Overview</span><span>⬡ &nbsp; Deception Lab</span><span>⌘ &nbsp; Network Monitor</span><span>△ &nbsp; Threat Alerts</span><span>◷ &nbsp; Incident Timeline</span><span>▤ &nbsp; Incident Reports</span></div><div class="preview-content"><div class="preview-title"><span>Security overview<small>EVERY SIGNAL. ONE COMPLETE PICTURE.</small></span><span class="preview-live-dot">● LIVE DEMO READY</span></div><div class="preview-capabilities"><span>DECEIVE<strong>Decoy assets</strong><small>Files · credentials · endpoints</small></span><span>DETECT<strong>Rule-based alerts</strong><small>Four policies. Real logic.</small></span><span>TRACE<strong>Session evidence</strong><small>Movements linked by session</small></span></div><div class="preview-evidence"><div><span class="exp-kicker">A CONNECTED INVESTIGATION</span><div class="evidence-route"><span>Gateway</span><i></i><span>Decoy</span><i></i><span>Alert</span><i></i><span>Incident</span></div></div><span class="preview-evidence-icon">⬡</span></div><div class="preview-bottom"><span>SQLite persistence</span><span>Deterministic reports</span><span>Offline ready</span></div></div></div>
+        <div class="preview-overlay"><span>THIS IS WHERE YOU TAKE CONTROL.</span><a class="exp-button solid" href="#dashboard">Launch Live Demo <span>↗</span></a><p>Working application. Safe simulation. No account required.</p></div>
+      </div><div class="defense-bottom"><p>Deceive. Detect. Trace.<br><span>Make every interaction count.</span></p><a class="exp-text-link" href="#threat">Back to the perimeter ↑</a></div>
+    </section>
+  </main>
+  <footer class="exp-footer"><a class="exp-brand" href="#threat"><img src="/mark.svg" width="22" height="25" alt="">Phantom<span>Shield</span></a><span>CYBER DECEPTION & INTRUSION INTELLIGENCE</span><span>FICTIONAL ENVIRONMENT. FUNCTIONAL DEFENSE.</span><button id="motion-toggle" aria-pressed="false">Motion: on</button></footer>
+</div>
+<div id="command-center" hidden><div id="app"><p class="loading">Connecting to PhantomShield…</p></div></div>
+<div id="toast" role="status"></div><dialog id="detail"></dialog>
+<noscript><div class="noscript-note">JavaScript is required for the interactive command center. This introduction remains readable without animations.</div></noscript>
+</body></html>
